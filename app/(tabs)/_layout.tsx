@@ -73,11 +73,10 @@ export default function TabsLayout() {
           tabBarActiveTintColor: "black",
         }}
       />
-      {/* Dinamik profil səhifəsi üçün tab göstərmirik */}
       <Tabs.Screen
         name="profile/[username]"
         options={{
-          href: null, // Bu səhifənin tabda görünməməsi üçün
+          href: null,
           title: "User Profile",
         }}
       />
