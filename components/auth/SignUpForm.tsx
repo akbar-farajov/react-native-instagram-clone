@@ -9,12 +9,18 @@ export const SignUpForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [username, setUsername] = useState("");
 
   const handleSignUp = async () => {
     setLoading(true);
     const { error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        data: {
+          username: username,
+        },
+      },
     });
 
     if (error) {
@@ -25,6 +31,14 @@ export const SignUpForm = () => {
 
   return (
     <View className="w-full">
+      <TextInput
+        value={username}
+        onChangeText={setUsername}
+        placeholder="Username"
+        autoCapitalize="none"
+        keyboardType="default"
+        className="bg-light-200 p-4 rounded-lg text-base mb-4 border border-gray-200"
+      />
       <TextInput
         value={email}
         onChangeText={setEmail}
