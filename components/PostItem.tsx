@@ -1,6 +1,7 @@
 import { PostWithUser } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
+import { useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
 
 interface PostItemProps {
@@ -11,6 +12,13 @@ export const PostItem = ({ post }: PostItemProps) => {
   if (!post.user) {
     return null;
   }
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(post.likes_count);
+
+  const handleLike = () => {
+    setIsLiked(!isLiked);
+    setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);
+  };
 
   return (
     <View className="mb-4">
@@ -36,10 +44,14 @@ export const PostItem = ({ post }: PostItemProps) => {
       <View className="flex-row items-center justify-between px-3 py-3">
         <View className="flex-row items-center gap-x-4">
           <View className="flex-row items-center gap-x-1">
-            <Ionicons name="heart-outline" size={28} color="black" />
-            <Text className="font-bold">
-              {post.likes_count.toLocaleString("en")}
-            </Text>
+            <Pressable onPress={handleLike}>
+              <Ionicons
+                name={isLiked ? "heart" : "heart-outline"}
+                size={28}
+                color={isLiked ? "red" : "black"}
+              />
+            </Pressable>
+            <Text className="font-bold">{likeCount.toLocaleString("en")}</Text>
           </View>
           <View className="flex-row items-center gap-x-1">
             <Ionicons name="chatbubble-outline" size={26} color="black" />
