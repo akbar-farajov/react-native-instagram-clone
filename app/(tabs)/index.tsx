@@ -9,14 +9,14 @@ const postsWithUsers = dummyPosts.map((post) => {
 });
 
 const FeedHeader = () => (
-  <View className="pt-12 pb-4 px-2.5">
+  <View className="pb-4 px-2.5">
     <Text className="text-3xl font-bold tracking-wider">Instagram</Text>
   </View>
 );
 
 export default function App() {
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-white pb-16">
       <FlatList
         data={postsWithUsers}
         renderItem={({ item }) => <PostItem post={item} />}

@@ -23,7 +23,7 @@ export default function ProfileScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-white pb-16">
       <FlatList
         data={userPosts}
         renderItem={({ item }) => <PostGridItem post={item} />}

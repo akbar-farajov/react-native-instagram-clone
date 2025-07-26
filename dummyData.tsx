@@ -187,6 +187,156 @@ export const dummyPosts: Post[] = [
     created_at: "2025-07-21T13:00:00Z",
   },
   {
+    id: 1111,
+    user_id: 1,
+    image_url:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1080",
+    caption: "Dostlar var olsun!",
+    likes_count: 350,
+    comments_count: 41,
+    created_at: "2025-07-21T13:00:00Z",
+  },
+  {
+    id: 1112,
+    user_id: 1,
+    image_url:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1080",
+    caption: "Dostlar var olsun!",
+    likes_count: 350,
+    comments_count: 41,
+    created_at: "2025-07-21T13:00:00Z",
+  },
+  {
+    id: 1145,
+    user_id: 1,
+    image_url:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1080",
+    caption: "Dostlar var olsun!",
+    likes_count: 350,
+    comments_count: 41,
+    created_at: "2025-07-21T13:00:00Z",
+  },
+  {
+    id: 1116,
+    user_id: 1,
+    image_url:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1080",
+    caption: "Dostlar var olsun!",
+    likes_count: 350,
+    comments_count: 41,
+    created_at: "2025-07-21T13:00:00Z",
+  },
+  {
+    id: 1119,
+    user_id: 1,
+    image_url:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1080",
+    caption: "Dostlar var olsun!",
+    likes_count: 350,
+    comments_count: 41,
+    created_at: "2025-07-21T13:00:00Z",
+  },
+  {
+    id: 11122,
+    user_id: 1,
+    image_url:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1080",
+    caption: "Dostlar var olsun!",
+    likes_count: 350,
+    comments_count: 41,
+    created_at: "2025-07-21T13:00:00Z",
+  },
+  {
+    id: 11124,
+    user_id: 1,
+    image_url:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1080",
+    caption: "Dostlar var olsun!",
+    likes_count: 350,
+    comments_count: 41,
+    created_at: "2025-07-21T13:00:00Z",
+  },
+  {
+    id: 11123,
+    user_id: 1,
+    image_url:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1080",
+    caption: "Dostlar var olsun!",
+    likes_count: 350,
+    comments_count: 41,
+    created_at: "2025-07-21T13:00:00Z",
+  },
+  {
+    id: 11167,
+    user_id: 1,
+    image_url:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1080",
+    caption: "Dostlar var olsun!",
+    likes_count: 350,
+    comments_count: 41,
+    created_at: "2025-07-21T13:00:00Z",
+  },
+  {
+    id: 111445,
+    user_id: 1,
+    image_url:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1080",
+    caption: "Dostlar var olsun!",
+    likes_count: 350,
+    comments_count: 41,
+    created_at: "2025-07-21T13:00:00Z",
+  },
+  {
+    id: 111345,
+    user_id: 1,
+    image_url:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1080",
+    caption: "Dostlar var olsun!",
+    likes_count: 350,
+    comments_count: 41,
+    created_at: "2025-07-21T13:00:00Z",
+  },
+  {
+    id: 111123,
+    user_id: 1,
+    image_url:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1080",
+    caption: "Dostlar var olsun!",
+    likes_count: 350,
+    comments_count: 41,
+    created_at: "2025-07-21T13:00:00Z",
+  },
+  {
+    id: 111111,
+    user_id: 1,
+    image_url:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1080",
+    caption: "Dostlar var olsun!",
+    likes_count: 350,
+    comments_count: 41,
+    created_at: "2025-07-21T13:00:00Z",
+  },
+  {
+    id: 111567,
+    user_id: 1,
+    image_url:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1080",
+    caption: "Dostlar var olsun!",
+    likes_count: 350,
+    comments_count: 41,
+    created_at: "2025-07-21T13:00:00Z",
+  },
+  {
+    id: 111789,
+    user_id: 1,
+    image_url:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1080",
+    caption: "Dostlar var olsun!",
+    likes_count: 350,
+    comments_count: 41,
+    created_at: "2025-07-21T13:00:00Z",
+  },
+  {
     id: 112,
     user_id: 6,
     image_url:

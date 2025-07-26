@@ -3,7 +3,24 @@ import { Tabs } from "expo-router";
 
 export default function TabsLayout() {
   return (
-    <Tabs screenOptions={{ headerShown: false, tabBarShowLabel: false }}>
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarItemStyle: {
+          width: "100%",
+          height: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+        },
+        tabBarStyle: {
+          position: "absolute",
+          overflow: "hidden",
+          height: 70,
+          borderColor: "transparent",
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
@@ -57,13 +74,13 @@ export default function TabsLayout() {
         }}
       />
       {/* Dinamik profil səhifəsi üçün tab göstərmirik */}
-      {/* <Tabs.Screen
-        name="[user]"
+      <Tabs.Screen
+        name="profile/[username]"
         options={{
           href: null, // Bu səhifənin tabda görünməməsi üçün
           title: "User Profile",
         }}
-      /> */}
+      />
     </Tabs>
   );
 }
