@@ -1,11 +1,11 @@
-export type User = {
+export interface User {
   id: number;
   username: string;
   full_name: string;
   profile_pic: string;
-};
+}
 
-export type Post = {
+export interface Post {
   id: number;
   user_id: number;
   image_url: string;
@@ -13,4 +13,8 @@ export type Post = {
   likes_count: number;
   comments_count: number;
   created_at: string;
-};
+}
+
+export interface PostWithUser extends Post {
+  user?: User;
+}
