@@ -15,6 +15,7 @@ export default function TabsLayout() {
               color={color}
             />
           ),
+          tabBarActiveTintColor: "black",
         }}
       />
       <Tabs.Screen
@@ -28,6 +29,7 @@ export default function TabsLayout() {
               color={color}
             />
           ),
+          tabBarActiveTintColor: "black",
         }}
       />
       <Tabs.Screen
@@ -37,6 +39,7 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="add-circle-outline" size={size} color={color} />
           ),
+          tabBarActiveTintColor: "black",
         }}
       />
       <Tabs.Screen
@@ -50,6 +53,7 @@ export default function TabsLayout() {
               color={color}
             />
           ),
+          tabBarActiveTintColor: "black",
         }}
       />
       {/* Dinamik profil səhifəsi üçün tab göstərmirik */}
