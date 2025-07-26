@@ -26,7 +26,7 @@ export const PostItem = ({ post }: PostItemProps) => {
 
       <Image
         source={{ uri: post.image_url }}
-        className="w-full aspect-square bg-gray-200" // 1:1 nisbət
+        className="w-full aspect-square bg-gray-200"
       />
 
       <View className="flex-row items-center justify-between px-3 py-3">

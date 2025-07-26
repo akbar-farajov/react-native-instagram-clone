@@ -1,6 +1,7 @@
 import { PostItem } from "@/components/PostItem";
 import { dummyPosts, dummyUsers } from "@/dummyData";
 import { FlatList, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const postsWithUsers = dummyPosts.map((post) => {
   const user = dummyUsers.find((user) => user.id === post.user_id);
@@ -15,7 +16,7 @@ const FeedHeader = () => (
 
 export default function App() {
   return (
-    <View className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-white">
       <FlatList
         data={postsWithUsers}
         renderItem={({ item }) => <PostItem post={item} />}
@@ -23,6 +24,6 @@ export default function App() {
         ListHeaderComponent={<FeedHeader />}
         showsVerticalScrollIndicator={false}
       />
-    </View>
+    </SafeAreaView>
   );
 }
