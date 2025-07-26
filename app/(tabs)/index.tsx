@@ -1,6 +1,7 @@
 import { PostItem } from "@/components/PostItem";
 import { dummyPosts, dummyUsers } from "@/dummyData";
-import { FlatList, Text, View } from "react-native";
+import { supabase } from "@/lib/supabase";
+import { Alert, FlatList, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const postsWithUsers = dummyPosts.map((post) => {
@@ -8,11 +9,28 @@ const postsWithUsers = dummyPosts.map((post) => {
   return { ...post, user };
 });
 
-const FeedHeader = () => (
-  <View className="pb-4 px-2.5">
-    <Text className="text-3xl font-bold tracking-wider">Instagram</Text>
-  </View>
-);
+const FeedHeader = () => {
+  const handleSignOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      Alert.alert("Error signing out", error.message);
+    }
+  };
+
+  return (
+    <View className="py-4 px-4 flex-row items-center justify-between">
+      <Text className="text-3xl font-bold tracking-wider">Instagram</Text>
+      <Pressable onPress={handleSignOut}>
+        <Text
+          className="font-semibold text-blue-500 text-base"
+          onPress={handleSignOut}
+        >
+          Sign Out
+        </Text>
+      </Pressable>
+    </View>
+  );
+};
 
 export default function App() {
   return (
