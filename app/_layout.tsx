@@ -1,8 +1,7 @@
-// app/_layout.tsx
-
 import { AuthProvider, useAuth } from "@/context/AuthContext";
 import "@/global.css";
 import { router, Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
 import { ActivityIndicator, View } from "react-native";
 
@@ -40,6 +39,7 @@ const RootLayoutNav = () => {
 export default function RootLayout() {
   return (
     <AuthProvider>
+      <StatusBar style="dark" />
       <RootLayoutNav />
     </AuthProvider>
   );
