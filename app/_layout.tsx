@@ -21,8 +21,6 @@ const RootLayoutNav = () => {
     }
   }, [session, loading]);
 
-  console.log("session", session);
-
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>

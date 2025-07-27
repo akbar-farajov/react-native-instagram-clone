@@ -1,54 +1,54 @@
+import { getPosts } from "@/actions/feed";
+import { FeedHeader } from "@/components/FeedHeader";
 import { PostItem } from "@/components/PostItem";
-import { dummyPosts, dummyUsers } from "@/dummyData";
-import { supabase } from "@/lib/supabase";
-import { useState } from "react";
-import { Alert, FlatList, Image, Pressable, Text, View } from "react-native";
+import { useFetch } from "@/hooks/useFetch";
+import { PostWithDetails } from "@/types";
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  Text,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const postsWithUsers = dummyPosts.map((post) => {
-  const user = dummyUsers.find((user) => user.id === post.user_id);
-  return { ...post, user };
-});
-
-const FeedHeader = () => {
-  const [loading, setLoading] = useState(false);
-  const handleSignOut = async () => {
-    setLoading(true);
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      Alert.alert("Error signing out", error.message);
-    }
-    setLoading(false);
-  };
-
-  return (
-    <View className="py-4 px-4 flex-row items-center justify-between">
-      <Image
-        source={require("@/assets/images/instagram-text-icon.png")}
-        className="w-40 h-12"
-      />
-      <Pressable onPress={handleSignOut}>
-        <Text
-          className="font-semibold text-blue-500 text-base"
-          onPress={handleSignOut}
-        >
-          {loading ? "Signing out..." : "Sign out"}
-        </Text>
-      </Pressable>
-    </View>
-  );
-};
-
 export default function App() {
-  return (
-    <SafeAreaView className="flex-1 bg-white pb-16">
+  const { data: posts, loading, error, refetch } = useFetch(() => getPosts());
+
+  console.log(loading);
+
+  const renderContent = () => {
+    if (loading && !posts) {
+      return (
+        <View className="flex-1 justify-center items-center">
+          <ActivityIndicator size="large" />
+        </View>
+      );
+    }
+
+    if (error) {
+      return (
+        <Text className="text-center mt-10 text-red-500">{error.message}</Text>
+      );
+    }
+
+    return (
       <FlatList
-        data={postsWithUsers}
+        data={posts as unknown as PostWithDetails[]}
         renderItem={({ item }) => <PostItem post={item} />}
         keyExtractor={(item) => item.id.toString()}
         ListHeaderComponent={<FeedHeader />}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={refetch} />
+        }
       />
+    );
+  };
+
+  return (
+    <SafeAreaView className="flex-1 bg-white pb-16">
+      {renderContent()}
     </SafeAreaView>
   );
 }
