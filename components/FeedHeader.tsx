@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import { useState } from "react";
-import { Alert, Image, Pressable, Text, View } from "react-native";
+import { Alert, Pressable, Text, View } from "react-native";
+import InstagramLogo from "./InstagramLogo";
 
 export const FeedHeader = () => {
   const [loading, setLoading] = useState(false);
@@ -16,10 +17,7 @@ export const FeedHeader = () => {
 
   return (
     <View className="py-4 px-4 flex-row items-center justify-between">
-      <Image
-        source={require("@/assets/images/instagram-text-icon.png")}
-        className="w-40 h-12"
-      />
+      <InstagramLogo />
       <Pressable onPress={handleSignOut}>
         <Text
           className="font-semibold text-blue-500 text-base"

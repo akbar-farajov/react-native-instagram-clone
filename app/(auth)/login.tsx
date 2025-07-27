@@ -1,8 +1,8 @@
 import { LoginForm } from "@/components/auth";
+import InstagramLogo from "@/components/InstagramLogo";
 import { Link } from "expo-router";
 import React from "react";
 import {
-  Image,
   KeyboardAvoidingView,
   Platform,
   Text,
@@ -17,10 +17,9 @@ export default function LoginScreen() {
       className="flex-1 justify-center bg-white"
     >
       <View className="p-6">
-        <Image
-          source={require("@/assets/images/instagram-text-icon.png")}
-          className="w-40 h-12 mx-auto mb-8"
-        />
+        <View className="flex-row justify-center mb-6">
+          <InstagramLogo className="w-40" />
+        </View>
         <LoginForm />
 
         <View className="flex-row justify-center mt-6">
