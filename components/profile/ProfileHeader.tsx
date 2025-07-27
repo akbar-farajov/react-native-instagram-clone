@@ -3,7 +3,7 @@ import React from "react";
 import { Image, Pressable, Text, View } from "react-native";
 
 interface ProfileHeaderProps {
-  user: User;
+  profile: User;
   postsCount: number;
 }
 
@@ -15,15 +15,16 @@ const StatItem = ({ label, value }: { label: string; value: number }) => (
 );
 
 export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
-  user,
+  profile,
   postsCount,
 }) => {
   return (
     <View className="p-4 pt-0">
       <View className="flex-row items-center justify-between">
         <Image
-          source={{ uri: user.profile_pic }}
+          source={{ uri: profile.avatar_url || "https://placehold.co/400" }}
           className="w-24 h-24 rounded-full bg-gray-200"
+          resizeMode="cover"
         />
         <View className="flex-row gap-x-6">
           <StatItem label="Posts" value={postsCount} />
@@ -33,7 +34,10 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
       </View>
 
       <View className="mt-4">
-        <Text className="font-bold">{user.full_name}</Text>
+        <Text className="font-bold">
+          {profile.full_name || profile.username}
+        </Text>
+
         <Text className="text-gray-500">
           React Native & Supabase Developer ✨
         </Text>

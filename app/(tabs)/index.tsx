@@ -15,8 +15,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function App() {
   const { data: posts, loading, error, refetch } = useFetch(() => getPosts());
 
-  console.log(loading);
-
   const renderContent = () => {
     if (loading && !posts) {
       return (

@@ -1,39 +1,99 @@
 // app/profile.tsx
 
+import { getPosts } from "@/actions/feed";
+import { getProfile } from "@/actions/profile";
 import { PostGridItem, ProfileHeader } from "@/components/profile";
-import { dummyPosts, dummyUsers } from "@/dummyData";
-import { Post, User } from "@/types";
+import { useAuth } from "@/context/AuthContext";
+import { useFetch } from "@/hooks/useFetch";
+import { PostWithDetails, User } from "@/types";
 import React from "react";
-import { FlatList, Text } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  Text,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ProfileScreen() {
-  const currentUserId = 1;
-  const user: User | undefined = dummyUsers.find((u) => u.id === currentUserId);
-  const userPosts: Post[] = dummyPosts.filter(
-    (p) => p.user_id === currentUserId
-  );
+  const { session } = useAuth();
+  const userId = session?.user.id;
 
-  if (!user) {
+  const {
+    data: profile,
+    loading: profileLoading,
+    error: profileError,
+    refetch: refetchProfile,
+  } = useFetch(() => {
+    if (!userId) return Promise.resolve(null);
+    return getProfile(userId);
+  });
+
+  const {
+    data: posts,
+    loading: postsLoading,
+    error: postsError,
+    refetch: refetchPosts,
+  } = useFetch(() => {
+    if (!userId) return Promise.resolve(null);
+    return getPosts(userId);
+  });
+
+  const onRefresh = () => {
+    refetchProfile();
+    refetchPosts();
+  };
+
+  const isLoading = profileLoading || postsLoading;
+  const combinedError = profileError || postsError;
+
+  if (!session) {
     return (
-      <SafeAreaView>
-        <Text>User not found!</Text>
+      <SafeAreaView className="flex-1 justify-center items-center">
+        <Text>User not found. Please log in again.</Text>
       </SafeAreaView>
     );
   }
 
-  return (
-    <SafeAreaView className="flex-1 bg-white pb-16">
+  const renderContent = () => {
+    if (isLoading && !profile && !posts) {
+      return (
+        <View className="flex-1 justify-center items-center">
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      );
+    }
+
+    if (combinedError) {
+      return (
+        <Text className="text-center mt-10 text-red-500">
+          {combinedError.message}
+        </Text>
+      );
+    }
+
+    return (
       <FlatList
-        data={userPosts}
+        data={posts as unknown as PostWithDetails[]}
         renderItem={({ item }) => <PostGridItem post={item} />}
         keyExtractor={(item) => item.id.toString()}
         numColumns={3}
         ListHeaderComponent={
-          <ProfileHeader user={user} postsCount={userPosts.length} />
+          <ProfileHeader
+            profile={profile as User}
+            postsCount={Array.isArray(posts) ? posts.length : 0}
+          />
         }
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={onRefresh} />
+        }
       />
-    </SafeAreaView>
+    );
+  };
+
+  return (
+    <SafeAreaView className="flex-1 bg-white">{renderContent()}</SafeAreaView>
   );
 }

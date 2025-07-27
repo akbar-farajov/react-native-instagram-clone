@@ -1,19 +1,16 @@
-import { PostWithUser } from "@/types";
+import { PostWithDetails } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
 
 interface PostItemProps {
-  post: PostWithUser;
+  post: PostWithDetails;
 }
 
 export const PostItem = ({ post }: PostItemProps) => {
-  if (!post.user) {
-    return null;
-  }
   const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(post.likes_count);
+  const [likeCount, setLikeCount] = useState(post.likes.length);
 
   const handleLike = () => {
     setIsLiked(!isLiked);
@@ -23,13 +20,15 @@ export const PostItem = ({ post }: PostItemProps) => {
   return (
     <View className="mb-4">
       <View className="flex-row items-center justify-between px-3 py-2">
-        <Link href={`/profile/${post.user.username}`} asChild>
+        <Link href={`/profile/${post?.profiles?.username}`} asChild>
           <Pressable className="flex-row items-center gap-x-3">
             <Image
-              source={{ uri: post.user.profile_pic }}
+              source={{ uri: post.profiles?.avatar_url || "" }}
               className="w-9 h-9 rounded-full bg-gray-200"
             />
-            <Text className="font-bold text-sm">{post.user.username}</Text>
+            <Text className="font-bold text-sm">
+              {post?.profiles?.username}
+            </Text>
           </Pressable>
         </Link>
 
@@ -56,7 +55,7 @@ export const PostItem = ({ post }: PostItemProps) => {
           <View className="flex-row items-center gap-x-1">
             <Ionicons name="chatbubble-outline" size={26} color="black" />
             <Text className="font-bold">
-              {post.comments_count.toLocaleString("en")}
+              {post.comments.length.toLocaleString("en")}
             </Text>
           </View>
 
@@ -66,7 +65,7 @@ export const PostItem = ({ post }: PostItemProps) => {
       </View>
 
       <View className="px-3 flex-row flex-wrap">
-        <Text className="font-bold">{post.user.username}</Text>
+        <Text className="font-bold">{post?.profiles?.username}</Text>
         <Text className="ml-1.5">{post.caption}</Text>
       </View>
 
