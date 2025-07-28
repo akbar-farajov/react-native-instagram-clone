@@ -19,7 +19,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   postsCount,
 }) => {
   return (
-    <View className="p-4 pt-0">
+    <View className="p-4">
       <View className="flex-row items-center justify-between">
         <Image
           source={{ uri: profile.avatar_url || "https://placehold.co/400" }}

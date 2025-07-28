@@ -18,7 +18,7 @@ export interface Post {
 
 export interface PostWithDetails extends Post {
   profiles: Database["public"]["Tables"]["profiles"]["Row"] | null;
-  likes: Database["public"]["Tables"]["likes"]["Row"][];
-  comments: Database["public"]["Tables"]["comments"]["Row"][];
+  likes: { count: number }[];
+  comments: { count: number }[];
   is_liked?: boolean;
 }

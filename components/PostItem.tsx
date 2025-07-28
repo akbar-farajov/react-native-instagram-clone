@@ -10,7 +10,7 @@ interface PostItemProps {
 
 export const PostItem = ({ post }: PostItemProps) => {
   const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(post.likes.length);
+  const [likeCount, setLikeCount] = useState(post.likes[0].count);
 
   const handleLike = () => {
     setIsLiked(!isLiked);
@@ -55,7 +55,7 @@ export const PostItem = ({ post }: PostItemProps) => {
           <View className="flex-row items-center gap-x-1">
             <Ionicons name="chatbubble-outline" size={26} color="black" />
             <Text className="font-bold">
-              {post.comments.length.toLocaleString("en")}
+              {post.comments[0].count.toLocaleString("en")}
             </Text>
           </View>
 
