@@ -1,3 +1,4 @@
+import { createPost } from "@/actions/post";
 import {
   CaptionInput,
   ImageSelector,
@@ -5,10 +6,9 @@ import {
   UploadHeader,
 } from "@/components/upload";
 import { useAuth } from "@/context/AuthContext";
-import { supabase } from "@/lib/supabase";
 import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React, { startTransition, useState } from "react";
 import { Alert, SafeAreaView } from "react-native";
 
 export default function UploadScreen() {
@@ -22,16 +22,16 @@ export default function UploadScreen() {
     if (status !== "granted") {
       Alert.alert(
         "Permission Denied",
-        "Sorry, we need camera roll permissions to make this work!"
+        "Sorry, we need camera roll permissions!"
       );
       return;
     }
 
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ["images"],
+      mediaTypes: ["videos", "images"],
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 1,
+      quality: 0.7,
     });
 
     if (!result.canceled) {
@@ -43,56 +43,24 @@ export default function UploadScreen() {
     if (!imageUri || !user) {
       Alert.alert(
         "Error",
-        "Please select an image and make sure you are logged in."
+        "Please select an image and ensure you are logged in."
       );
       return;
     }
 
     setLoading(true);
-
     try {
-      // 1. Create a unique file path for the image
-      const fileExt = imageUri.split(".").pop()?.toLowerCase() ?? "jpeg";
-      const fileName = `${Date.now()}.${fileExt}`;
-      const filePath = `${user.id}/${fileName}`;
-
-      // 2. Create FormData to handle the file upload robustly
-      const formData = new FormData();
-      formData.append("file", {
-        uri: imageUri,
-        name: fileName,
-        type: `image/${fileExt === "jpg" ? "jpeg" : fileExt}`,
-      } as any);
-
-      // 3. Upload the image to Supabase Storage
-      const { data: uploadData, error: uploadError } = await supabase.storage
-        .from("posts") // The bucket name
-        .upload(filePath, formData, {
-          // The content type is now set within the FormData
-        });
-
-      if (uploadError) throw uploadError;
-
-      // 4. Get the public URL of the uploaded image
-      const { data: urlData } = supabase.storage
-        .from("posts")
-        .getPublicUrl(uploadData.path);
-
-      const publicUrl = urlData.publicUrl;
-
-      // 5. Insert the post details into the 'posts' database table
-      const { error: insertError } = await supabase.from("posts").insert({
-        user_id: user.id,
-        image_url: publicUrl,
-        caption: caption,
+      await createPost({
+        userId: user.id,
+        imageUri,
+        caption,
       });
 
-      if (insertError) throw insertError;
-
-      // 6. If successful, reset the state and navigate to the feed
       Alert.alert("Success", "Your post has been shared!");
       resetState();
-      router.push("/(tabs)");
+      startTransition(() => {
+        router.push("/(tabs)");
+      });
     } catch (error: any) {
       Alert.alert("Upload Failed", error.message);
     } finally {
