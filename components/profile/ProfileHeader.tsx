@@ -1,4 +1,5 @@
 import { User } from "@/types";
+import { Link } from "expo-router";
 import React from "react";
 import { Image, Pressable, Text, View } from "react-native";
 
@@ -22,7 +23,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
     <View className="p-4">
       <View className="flex-row items-center justify-between">
         <Image
-          source={{ uri: profile.avatar_url || "https://placehold.co/400" }}
+          source={{ uri: profile.avatar_url || "https://placehold.co/200" }}
           className="w-24 h-24 rounded-full bg-gray-200"
           resizeMode="cover"
         />
@@ -44,9 +45,12 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
       </View>
 
       <View className="flex-row mt-4 gap-x-2">
-        <Pressable className="flex-1 bg-gray-200 p-2 rounded-lg items-center">
-          <Text className="font-semibold">Edit Profile</Text>
-        </Pressable>
+        <Link href={"/profile/edit"} asChild>
+          <Pressable className="flex-1 bg-gray-200 p-2 rounded-lg items-center">
+            <Text className="font-semibold">Edit Profile</Text>
+          </Pressable>
+        </Link>
+
         <Pressable className="flex-1 bg-gray-200 p-2 rounded-lg items-center">
           <Text className="font-semibold">Share Profile</Text>
         </Pressable>

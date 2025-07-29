@@ -1,11 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import { PostWithDetails } from "@/types";
+import { uploadFile } from "./storage";
 
-/**
-
- * @param currentUserId The ID of the currently logged-in user, required to check the 'is_liked' status.
- * @param profileId Optional. If provided, fetches posts only for this specific user profile.
- */
 export const getPosts = async (
   currentUserId: string,
   profileId?: string
@@ -69,6 +65,31 @@ export const likePost = async (postId: number, userId: string) => {
   }
 };
 
+export const createPost = async ({
+  userId,
+  imageUri,
+  caption,
+}: CreatePostPayload) => {
+  try {
+    let publicUrl = null;
+    if (imageUri) {
+      publicUrl = await uploadFile("posts", imageUri, userId);
+    }
+
+    const { error: insertError } = await supabase.from("posts").insert({
+      user_id: userId,
+      image_url: publicUrl ?? "",
+      caption: caption,
+    });
+
+    if (insertError) throw insertError;
+    return true;
+  } catch (error) {
+    console.error("Error creating post:", error);
+    throw error;
+  }
+};
+
 export const unlikePost = async (postId: number, userId: string) => {
   try {
     const { error } = await supabase
@@ -90,47 +111,3 @@ interface CreatePostPayload {
   imageUri: string;
   caption: string;
 }
-
-export const createPost = async ({
-  userId,
-  imageUri,
-  caption,
-}: CreatePostPayload) => {
-  try {
-    const fileExt = imageUri.split(".").pop()?.toLowerCase() ?? "jpeg";
-    const fileName = `${Date.now()}.${fileExt}`;
-    const filePath = `${userId}/${fileName}`;
-
-    const formData = new FormData();
-    formData.append("file", {
-      uri: imageUri,
-      name: fileName,
-      type: `image/${fileExt === "jpg" ? "jpeg" : fileExt}`,
-    } as any);
-
-    const { data: uploadData, error: uploadError } = await supabase.storage
-      .from("posts")
-      .upload(filePath, formData);
-
-    if (uploadError) throw uploadError;
-
-    const { data: urlData } = supabase.storage
-      .from("posts")
-      .getPublicUrl(uploadData.path);
-
-    const publicUrl = urlData.publicUrl;
-
-    const { error: insertError } = await supabase.from("posts").insert({
-      user_id: userId,
-      image_url: publicUrl,
-      caption: caption,
-    });
-
-    if (insertError) throw insertError;
-
-    return true;
-  } catch (error) {
-    console.error("Error creating post:", error);
-    throw error;
-  }
-};

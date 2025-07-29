@@ -15,6 +15,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function App() {
   const { session } = useAuth();
+ 
   const userId = session?.user.id;
   const {
     data: posts,
