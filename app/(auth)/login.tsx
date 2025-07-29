@@ -1,5 +1,5 @@
 import { LoginForm } from "@/components/auth";
-import InstagramLogo from "@/components/InstagramLogo";
+import InstagramLogo from "@/components/shared/InstagramLogo";
 import { Link } from "expo-router";
 import React from "react";
 import {

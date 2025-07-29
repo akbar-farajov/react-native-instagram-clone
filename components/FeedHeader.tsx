@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import { useState } from "react";
 import { Alert, Pressable, Text, View } from "react-native";
-import InstagramLogo from "./InstagramLogo";
+import InstagramLogo from "./shared/InstagramLogo";
 
 export const FeedHeader = () => {
   const [loading, setLoading] = useState(false);
