@@ -1,4 +1,4 @@
-import { getPosts } from "@/actions/feed";
+import { getPosts } from "@/actions/post";
 import { getProfile } from "@/actions/profile";
 import { PostGridItem, ProfileHeader } from "@/components/profile";
 import { useAuth } from "@/context/AuthContext";

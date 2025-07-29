@@ -1,4 +1,4 @@
-import { getPosts } from "@/actions/feed";
+import { getPosts } from "@/actions/post";
 import { FeedHeader } from "@/components/FeedHeader";
 import { PostItem } from "@/components/shared/PostItem";
 import { useAuth } from "@/context/AuthContext";

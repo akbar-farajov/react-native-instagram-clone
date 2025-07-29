@@ -53,3 +53,34 @@ export const getPosts = async (
     return null;
   }
 };
+
+export const likePost = async (postId: number, userId: string) => {
+  try {
+    const { error } = await supabase
+      .from("likes")
+      .insert({ post_id: postId, user_id: userId });
+
+    if (error) {
+      throw error;
+    }
+  } catch (error) {
+    console.error("Error liking post:", error);
+    throw error;
+  }
+};
+
+export const unlikePost = async (postId: number, userId: string) => {
+  try {
+    const { error } = await supabase
+      .from("likes")
+      .delete()
+      .match({ post_id: postId, user_id: userId });
+
+    if (error) {
+      throw error;
+    }
+  } catch (error) {
+    console.error("Error unliking post:", error);
+    throw error;
+  }
+};
