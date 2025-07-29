@@ -1,6 +1,7 @@
 import { getPosts } from "@/actions/feed";
 import { FeedHeader } from "@/components/FeedHeader";
-import { PostItem } from "@/components/PostItem";
+import { PostItem } from "@/components/shared/PostItem";
+import { useAuth } from "@/context/AuthContext";
 import { useFetch } from "@/hooks/useFetch";
 import { PostWithDetails } from "@/types";
 import {
@@ -13,7 +14,17 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function App() {
-  const { data: posts, loading, error, refetch } = useFetch(() => getPosts());
+  const { session } = useAuth();
+  const userId = session?.user.id;
+  const {
+    data: posts,
+    loading,
+    error,
+    refetch,
+  } = useFetch(() => {
+    if (!userId) return Promise.resolve(null);
+    return getPosts(userId);
+  });
 
   const renderContent = () => {
     if (loading && !posts) {

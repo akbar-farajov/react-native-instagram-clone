@@ -1,5 +1,3 @@
-// app/profile.tsx
-
 import { getPosts } from "@/actions/feed";
 import { getProfile } from "@/actions/profile";
 import { PostGridItem, ProfileHeader } from "@/components/profile";
@@ -37,7 +35,7 @@ export default function ProfileScreen() {
     refetch: refetchPosts,
   } = useFetch(() => {
     if (!userId) return Promise.resolve(null);
-    return getPosts(userId);
+    return getPosts(userId, userId);
   });
 
   const onRefresh = () => {

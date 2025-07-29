@@ -1,29 +1,55 @@
 import { supabase } from "@/lib/supabase";
+import { PostWithDetails } from "@/types";
 
-export const getPosts = async (userId?: string) => {
+/**
+
+ * @param currentUserId The ID of the currently logged-in user, required to check the 'is_liked' status.
+ * @param profileId Optional. If provided, fetches posts only for this specific user profile.
+ */
+export const getPosts = async (
+  currentUserId: string,
+  profileId?: string
+): Promise<PostWithDetails[] | null> => {
   try {
     let query = supabase.from("posts").select(
       `*,
         profiles!posts_user_id_fkey(*),
         likes(count),
-        comments(count)`
+        comments(count)
+      `
     );
 
-    if (userId) {
-      query = query.eq("user_id", userId);
+    if (profileId) {
+      query = query.eq("user_id", profileId);
     }
 
-    const { data, error, status } = await query
+    const { data: postsData, error: postsError } = await query
       .limit(10)
       .order("created_at", { ascending: false });
 
-    if (error && status !== 406) {
-      return error;
-    }
+    if (postsError) throw postsError;
+    if (!postsData) return [];
 
-    return data;
+    const { data: likedPosts, error: likesError } = await supabase
+      .from("likes")
+      .select("post_id")
+      .eq("user_id", currentUserId);
+
+    if (likesError) throw likesError;
+
+    const likedPostIds = new Set(likedPosts.map((like) => like.post_id));
+
+    const finalPosts = postsData
+      .filter((post) => post.created_at)
+      .map((post) => ({
+        ...post,
+        created_at: post.created_at as string,
+        is_liked: likedPostIds.has(post.id),
+      }));
+
+    return finalPosts;
   } catch (error) {
     console.error("Error fetching posts:", error);
-    return error;
+    return null;
   }
 };
