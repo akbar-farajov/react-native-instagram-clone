@@ -73,7 +73,7 @@ export const createPost = async ({
   try {
     let publicUrl = null;
     if (imageUri) {
-      publicUrl = await uploadFile("posts", imageUri, userId);
+      publicUrl = await uploadFile("uploads", imageUri, userId);
     }
 
     const { error: insertError } = await supabase.from("posts").insert({

@@ -1,6 +1,4 @@
-// app/profile/[username].tsx
-
-import { useLocalSearchParams } from "expo-router"; // Parametri götürmək üçün hook
+import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import { FlatList, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
